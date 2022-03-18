@@ -8,13 +8,13 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Login to ECR
-        id: devecr
+        id: ecr
         uses: jwalton/gh-ecr-login@v1
         with:
           access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           region: us-east-1
-      - run: echo ${{ steps.prodecr.outputs.registry }}
+      - run: echo ${{ steps.ecr.outputs.registry }}
 #      - name: Set Docker Tags
 #        env:
 #          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
