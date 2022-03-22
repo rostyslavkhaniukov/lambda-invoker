@@ -18,7 +18,8 @@ jobs:
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: true
         run: |
-          IMAGE_VERSION=${${GITHUB_REF:11}//\//_}_${GITHUB_SHA}
+          ACTION_REF=${GITHUB_REF:11}
+          IMAGE_VERSION=${ACTION_REF//\//_}_${GITHUB_SHA}
           echo "ECR_TAG=${{ steps.ecr.outputs.registry }}/lambda-invoker:${IMAGE_VERSION}" >> $GITHUB_ENV
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
