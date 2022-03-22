@@ -26,7 +26,7 @@ func HandleRequest(ctx context.Context, name MyEvent) (string, error) {
 		return fmt.Sprintf("Error calling test-lambda-web. Error: %s", err.Error()), nil
 	}
 
-	return fmt.Sprintf("All OK! %s\n", result), nil
+	return fmt.Sprintf("All OK! %s\n", string(result.Payload)), nil
 }
 
 func main() {
