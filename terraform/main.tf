@@ -36,7 +36,7 @@ resource "aws_iam_role_policy_attachment" "lambda_policy_attach" {
 resource "aws_lambda_function" "web_lambda" {
   function_name = local.web_lambda_name
   package_type  = "Image"
-  image_uri     = "499781533590.dkr.ecr.us-east-1.amazonaws.com/lambda-invoker:master_87d517"
+  image_uri     = "499781533590.dkr.ecr.us-east-1.amazonaws.com/test-lambda:master_f3a4ca"
   
   role = aws_iam_role.lambda_role.arn
 

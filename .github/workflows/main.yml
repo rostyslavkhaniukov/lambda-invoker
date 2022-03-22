@@ -21,6 +21,8 @@ jobs:
           ACTION_REF=${GITHUB_REF:11}
           IMAGE_VERSION=${ACTION_REF//\//_}_${GITHUB_SHA::6}
           echo "ECR_TAG=${{ steps.ecr.outputs.registry }}/test-lambda:${IMAGE_VERSION}" >> $GITHUB_ENV
+      - name: Change directory
+        run: cd test-lambda
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
