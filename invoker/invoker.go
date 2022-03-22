@@ -20,10 +20,10 @@ func HandleRequest(ctx context.Context, name MyEvent) (string, error) {
 
 	client := lambdaService.New(sess, &aws.Config{Region: aws.String("us-east-1")})
 	result, err := client.Invoke(&lambdaService.InvokeInput{
-		FunctionName: aws.String("MyGetItemsFunction"),
+		FunctionName: aws.String("test-lambda-web"),
 	})
 	if err != nil {
-		return fmt.Sprintf("Error calling MyGetItemsFunction"), nil
+		return fmt.Sprintf("Error calling test-lambda-web"), nil
 	}
 
 	return fmt.Sprintf("All OK! %s\n", result), nil
