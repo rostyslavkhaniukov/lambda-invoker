@@ -20,7 +20,7 @@ jobs:
         run: |
           ACTION_REF=${GITHUB_REF:11}
           IMAGE_VERSION=${ACTION_REF//\//_}_${GITHUB_SHA::6}
-          echo "ECR_TAG=${{ steps.ecr.outputs.registry }}/test-lambda:${IMAGE_VERSION}" >> $GITHUB_ENV
+          echo "ECR_TAG=${{ steps.ecr.outputs.registry }}/lambda-invoker:${IMAGE_VERSION}" >> $GITHUB_ENV
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
@@ -29,12 +29,12 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}-test
+          key: ${{ runner.os }}-buildx-${{ github.sha }}-invoker
           restore-keys: ${{ runner.os }}-buildx-
       - name: Build Image and Push to Registries
         uses: docker/build-push-action@v2
         with:
-          context: test-lambda
+          context: invoker
           platforms: linux/amd64
           build-args: |
             BUILD_ID=${{ github.sha }}
