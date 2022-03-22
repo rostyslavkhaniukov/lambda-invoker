@@ -23,7 +23,7 @@ func HandleRequest(ctx context.Context, name MyEvent) (string, error) {
 		FunctionName: aws.String("test-lambda-web"),
 	})
 	if err != nil {
-		return fmt.Sprintf("Error calling test-lambda-web"), nil
+		return fmt.Sprintf("Error calling test-lambda-web. Error: %s", err.Error()), nil
 	}
 
 	return fmt.Sprintf("All OK! %s\n", result), nil
