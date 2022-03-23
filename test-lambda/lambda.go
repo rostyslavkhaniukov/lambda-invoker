@@ -7,6 +7,7 @@ import (
 )
 
 func HandleRequest(ctx context.Context, name string) (string, error) {
+	fmt.Printf("Hello %s!", name)
 	return fmt.Sprintf("Hello %s!", name), nil
 }
 
