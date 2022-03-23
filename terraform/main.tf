@@ -21,7 +21,7 @@ locals {
 resource "aws_lambda_function" "web_lambda" {
   function_name = local.web_lambda_name
   package_type  = "Image"
-  image_uri     = "499781533590.dkr.ecr.us-east-1.amazonaws.com/test-lambda:master_99f322"
+  image_uri     = "499781533590.dkr.ecr.us-east-1.amazonaws.com/test-lambda:master_ae58fe"
 
   role = aws_iam_role.test_lambda_role.arn
 
@@ -32,7 +32,7 @@ resource "aws_lambda_function" "web_lambda" {
 resource "aws_lambda_function" "invoker_lambda" {
   function_name = local.invoker_lambda_name
   package_type  = "Image"
-  image_uri     = "499781533590.dkr.ecr.us-east-1.amazonaws.com/lambda-invoker:master_99f322"
+  image_uri     = "499781533590.dkr.ecr.us-east-1.amazonaws.com/lambda-invoker:master_ae58fe"
 
   role = aws_iam_role.invoker_lambda_role.arn
 

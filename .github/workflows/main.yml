@@ -34,7 +34,7 @@ jobs:
       - name: Build Image and Push to Registries
         uses: docker/build-push-action@v2
         with:
-          context: test-lambda
+          context: test-lambda-php
           platforms: linux/amd64
           build-args: |
             BUILD_ID=${{ github.sha }}

@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-sdk-go/aws"
@@ -21,9 +22,14 @@ func HandleRequest(ctx context.Context, event InvokerEvent) (string, error) {
 
 	client := lambdaService.New(sess, &aws.Config{Region: aws.String("us-east-1")})
 
+	payload, err := json.Marshal([]byte(event.Arguments))
+	if err != nil {
+		return fmt.Sprintf("Invalid CLI arguments. Error: %s", err.Error()), nil
+	}
+
 	result, err := client.Invoke(&lambdaService.InvokeInput{
 		FunctionName: aws.String(event.LambdaName),
-		Payload: []byte(event.Arguments),
+		Payload: payload,
 	})
 	if err != nil {
 		return fmt.Sprintf("Error calling %s. Error: %s", event.LambdaName, err.Error()), nil
