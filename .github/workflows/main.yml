@@ -30,13 +30,13 @@ jobs:
         uses: actions/cache@v1
         with:
           path: vendor
-          key: composer-dev-${{ hashFiles('composer.lock') }}
+          key: composer-dev-${{ hashFiles('test-lambda-php/composer.lock') }}
           restore-keys: |
-            composer-dev-${{ hashFiles('composer.lock') }}
+            composer-dev-${{ hashFiles('test-lambda-php/composer.lock') }}
             composer-dev-
       - name: Composer Install Dev
         run: |
-          composer install -n --prefer-dist
+          cd test-lambda-php && composer install -n --prefer-dist
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
