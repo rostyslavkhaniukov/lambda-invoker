@@ -8,6 +8,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	lambdaService "github.com/aws/aws-sdk-go/service/lambda"
+	"os"
 )
 
 type InvokerEvent struct {
@@ -20,7 +21,7 @@ func HandleRequest(ctx context.Context, event InvokerEvent) (string, error) {
 		SharedConfigState: session.SharedConfigEnable,
 	}))
 
-	client := lambdaService.New(sess, &aws.Config{Region: aws.String("us-east-1")})
+	client := lambdaService.New(sess, &aws.Config{Region: aws.String(os.Getenv("AWS_REGION"))})
 
 	payload, err := json.Marshal([]byte(event.Arguments))
 	if err != nil {
