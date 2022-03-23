@@ -21,6 +21,22 @@ jobs:
           ACTION_REF=${GITHUB_REF:11}
           IMAGE_VERSION=${ACTION_REF//\//_}_${GITHUB_SHA::6}
           echo "ECR_TAG=${{ steps.ecr.outputs.registry }}/test-lambda:${IMAGE_VERSION}" >> $GITHUB_ENV
+      - name: Setup PHP with composer v2
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+          tools: composer:v2
+      - name: Composer Cache
+        uses: actions/cache@v1
+        with:
+          path: vendor
+          key: composer-dev-${{ hashFiles('composer.lock') }}
+          restore-keys: |
+            composer-dev-${{ hashFiles('composer.lock') }}
+            composer-dev-
+      - name: Composer Install Dev
+        run: |
+          composer install -n --prefer-dist
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
