@@ -30,6 +30,8 @@ func HandleRequest(ctx context.Context, event InvokerEvent) (string, error) {
 		return fmt.Sprintf("ListFunctions. Error: %s", err.Error()), nil
 	}
 
+	fmt.Printf("Fetched: %d", len(output.Functions))
+
 	var functions []string
 	for _, elem := range output.Functions {
 		functions = append(functions, *elem.FunctionName)
