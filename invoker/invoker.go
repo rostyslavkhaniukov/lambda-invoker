@@ -2,13 +2,12 @@ package main
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	lambdaService "github.com/aws/aws-sdk-go/service/lambda"
-	"os"
+	"strings"
 )
 
 type InvokerEvent struct {
@@ -21,22 +20,34 @@ func HandleRequest(ctx context.Context, event InvokerEvent) (string, error) {
 		SharedConfigState: session.SharedConfigEnable,
 	}))
 
-	client := lambdaService.New(sess, &aws.Config{Region: aws.String(os.Getenv("AWS_REGION"))})
+	client := lambdaService.New(sess, &aws.Config{Region: aws.String("us-east-1")})
 
-	payload, err := json.Marshal([]byte(event.Arguments))
+	output, err := client.ListFunctions(&lambdaService.ListFunctionsInput{
+		MasterRegion: aws.String("us-east-1"),
+	})
 	if err != nil {
-		return fmt.Sprintf("Invalid CLI arguments. Error: %s", err.Error()), nil
+		return fmt.Sprintf("ListFunctions. Error: %s", err.Error()), nil
 	}
 
-	result, err := client.Invoke(&lambdaService.InvokeInput{
+	var functions []string
+	for _, elem := range output.Functions {
+		functions = append(functions, *elem.FunctionName)
+	}
+
+	//payload, err := json.Marshal([]byte(event.Arguments))
+	//if err != nil {
+	//	return fmt.Sprintf("Invalid CLI arguments. Error: %s", err.Error()), nil
+	//}
+
+	/*result, err := client.Invoke(&lambdaService.InvokeInput{
 		FunctionName: aws.String(event.LambdaName),
 		Payload: payload,
 	})
 	if err != nil {
 		return fmt.Sprintf("Error calling %s. Error: %s", event.LambdaName, err.Error()), nil
-	}
+	}*/
 
-	return fmt.Sprintf("Done! %s\n", string(result.Payload)), nil
+	return fmt.Sprintf("Done! %s\n", strings.Join(functions, ",")), nil
 }
 
 func main() {
