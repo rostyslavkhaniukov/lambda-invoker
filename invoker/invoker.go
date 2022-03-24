@@ -24,6 +24,7 @@ func HandleRequest(ctx context.Context, event InvokerEvent) (string, error) {
 
 	output, err := client.ListFunctions(&lambdaService.ListFunctionsInput{
 		MasterRegion: aws.String("us-east-1"),
+		FunctionVersion: aws.String("ALL"),
 	})
 	if err != nil {
 		return fmt.Sprintf("ListFunctions. Error: %s", err.Error()), nil
