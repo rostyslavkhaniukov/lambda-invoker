@@ -23,7 +23,6 @@ func HandleRequest(ctx context.Context, event InvokerEvent) (string, error) {
 	client := lambdaService.New(sess, &aws.Config{Region: aws.String("us-east-1")})
 
 	output, err := client.ListFunctions(&lambdaService.ListFunctionsInput{
-		MasterRegion: aws.String("ALL"),
 		FunctionVersion: aws.String("ALL"),
 	})
 	if err != nil {
