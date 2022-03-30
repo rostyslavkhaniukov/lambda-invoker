@@ -34,7 +34,7 @@ func HandleRequest(ctx context.Context, event InvokerEvent) (string, error) {
 		functions = append(functions, *elem.FunctionName)
 	}*/
 
-	payload, err := json.Marshal([]byte(event.Arguments))
+	payload, err := json.Marshal(event.Arguments)
 	if err != nil {
 		return fmt.Sprintf("Invalid CLI arguments. Error: %s", err.Error()), nil
 	}
