@@ -47,7 +47,7 @@ func HandleRequest(ctx context.Context, event InvokerEvent) (string, error) {
 		return fmt.Sprintf("Error calling %s. Error: %s", event.LambdaName, err.Error()), nil
 	}
 
-	return fmt.Sprintf("Done! %s\n", result), nil
+	return fmt.Sprintf("Done! %s\n", string(result.Payload)), nil
 }
 
 func main() {
